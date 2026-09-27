@@ -1,55 +1,84 @@
+# lordgen-skill-builder
+
+A Claude Code skill for designing, writing and testing other skills, plus the
+business reference set those skills are written against. For anyone building a
+small library of agent skills who wants them to trigger reliably and stay honest
+about what they may automate.
+
+Built by **[Lordmark Dorgu](https://github.com/Kikobazz123)** · MIT licensed.
+
 ---
-name: lordgen-ai-skill-builder
-description: Foundation for building the skills that will control the LordGen AI system, plus the reference material those skills draw from.
----
 
-# LordGen AI — Skill builder
+## The problem it solves
 
-This repo has two jobs, deliberately kept in one place:
+Agent skills fail in three predictable ways: they never fire because the description
+reads like a label rather than a trigger, they fire on everything and waste context,
+or they fire and perform no better than no skill at all. A second problem sits
+underneath: a skill written without knowing what the business sells, which tool owns
+what, and which actions need a human will guess, and a guess that sends an email is
+expensive. This repo addresses both: a method for building skills, and one place to
+read the facts they depend on.
 
-1. **`skills/`** — the capability to build Claude Code skills, starting with
-   `skills/skill-builder/` itself: a general-purpose skill for designing, writing, testing,
-   and improving any SKILL.md package to a production quality bar. Every skill LordGen ends
-   up running — proposal drafting, outreach prep, reporting, whatever comes next — gets built
-   using this.
-2. **`references/`** — the business and brand grounding those skills are built against:
-   what LordGen actually sells, which platform runs what, what's safe to automate vs. needs a
-   human, and the real brand identity. A skill authored without reading the relevant reference
-   file first is guessing.
+## Stack
+
+Markdown and YAML frontmatter, in the Claude Code `SKILL.md` format. No runtime code.
+
+## Architecture
 
 ```
-Lordgen AI Skill builder/
-├── skills/
-│   └── skill-builder/       # SKILL.md + references/ + assets/ — the skill-authoring skill
-├── references/
-│   ├── README.md            # index — which file to read for which kind of skill
-│   ├── architecture.md      # mission, the three business loops, layer map
-│   ├── platform-map.md      # which connected tool (HubSpot, Apollo, Vercel...) owns what
-│   ├── offers.md            # offer catalogue — stub, needs real pricing/scope filled in
-│   ├── human-in-the-loop.md # what a skill may automate vs. must hand off for approval
-│   └── brand.md             # pointer to the real brand identity + logo files
-└── README.md                # this file
+skills/skill-builder/
+  SKILL.md                 the method: decision gate, trigger writing, progressive
+                           disclosure, testing, definition of done
+  references/anatomy.md    how a skill package is laid out
+  references/testing.md    baseline-vs-skill runs, assertions, trigger evals
+  assets/SKILL-template.md starting point for a new skill
+references/
+  README.md                which file to read for which kind of skill
+  architecture.md          mission, the three business loops, layer map
+  platform-map.md          which connected tool owns which job
+  human-in-the-loop.md     Green / Yellow / Red policy for automation
+  offers.md                offer catalogue (names only; fields left blank)
+  brand.md                 pointer to the brand guideline and logo files
 ```
 
-## What this is not, yet
+A new skill starts at Step 0 of `SKILL.md`, reads the matching file in
+`references/`, and is tested against a no-skill baseline before it counts as done.
 
-This is not the full LordGen business-operations repo. There's no `CLAUDE.md` here on
-purpose — that belongs to a separate operating-rules setup the user is building elsewhere.
-There's no `clients/`, `workflows/`, or `tools/` tree here either; those live in the two
-standalone sibling projects for now:
+## Run locally
 
-- `../Lordgen ai scraper/` — Firecrawl-based lead-gen scraping, its own `CLAUDE.md`
-- `../Newsletter Demo/` — the research → infographic → branded-email pipeline, and the source
-  of the real brand assets `references/brand.md` points at
+Copy `skills/skill-builder/` into `~/.claude/skills/` (user-wide) or a project's
+`.claude/skills/`, then ask Claude Code to make or fix a skill. The references are
+read on demand; keep them next to the skill or point to them from the new skill.
 
-Nothing here merges those in. This foundation exists so that when a new LordGen skill gets
-written — here or in either sibling project — it has somewhere real to pull context from
-instead of re-deriving it, or worse, inventing it.
+## Tests
 
-## Source material
+No automated tests in this repo. `references/testing.md` describes the evaluation
+method the skill applies to the skills it builds (run each test prompt with and
+without the skill, check assertions, run trigger evals on should-fire and
+should-not-fire prompts); no eval runs are committed here.
 
-Everything in `references/` is condensed from `LordGen_Master_Brief_v3.md`
-(`Downloads/Lordgen Markdown files/`) — the reconciled brief. An earlier draft
-(`LordGen_Master_Brief_for_Claude.md`) proposed a larger, more speculative system; v3
-explicitly cuts that down to what one founder can actually run, so it's the one this repo
-follows.
+## Design decisions and trade-offs
+
+- **Decide the surface before writing a skill.** A rule that must always hold belongs
+  in a hook or permission, not prose; always-on context belongs in a short
+  `CLAUDE.md`; deterministic work belongs in a script the skill calls. Most requests
+  to "make a skill" are better served elsewhere, and the skill says so.
+- **Baseline first.** If a capable model already does the task well without the
+  skill, the skill only adds context cost. Testing against no-skill output is
+  mandatory, not optional.
+- **AI reasons, software executes, humans approve.** `human-in-the-loop.md` sorts
+  actions into Green (automate: research, drafting, internal reports), Yellow
+  (prepare, then stop for approval: client messages, proposals, publishing) and Red
+  (human only: money, contracts, destructive or irreversible actions). Skills that
+  draft outreach stop at a reviewed draft.
+- **Blank rather than invented.** The offer catalogue lists offer names with every
+  pricing and scope field empty; filling them with plausible numbers would teach
+  every downstream skill to quote prices nobody agreed to.
+- **Kept separate from the projects that use it.** Related work lives in its own
+  repos, such as [lordgen-scraper](https://github.com/Kikobazz123/lordgen-scraper) and
+  [lordgen-newsletter-pipeline](https://github.com/Kikobazz123/lordgen-newsletter-pipeline);
+  merging them is a deliberate later step, not an accident of layout.
+
+The references are condensed from a private master brief (v3), which cut an earlier,
+larger system design down to what one founder can run. `brand.md` points to brand
+files that are not in this repo.
