@@ -8,7 +8,7 @@ description: Pointer to LordGen's actual brand identity (colors, type, logo file
 Read when: a skill generates anything a client, prospect, or the public will see —
 an email, a deck, a landing page, a proposal document.
 
-**Source of truth:** `../../Newsletter Demo/newsletter-brand-guideline.md` — read that file
+**Source of truth:** [`newsletter-brand-guideline.md`](https://github.com/Kikobazz123/lordgen-newsletter-pipeline/blob/main/newsletter-brand-guideline.md) in lordgen-newsletter-pipeline — read that file
 directly rather than duplicating it here; it will drift out of sync otherwise. Summary of
 what it confirms, so you know whether it's worth opening:
 

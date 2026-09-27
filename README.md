@@ -80,5 +80,6 @@ should-not-fire prompts); no eval runs are committed here.
   merging them is a deliberate later step, not an accident of layout.
 
 The references are condensed from a private master brief (v3), which cut an earlier,
-larger system design down to what one founder can run. `brand.md` points to brand
-files that are not in this repo.
+larger system design down to what one founder can run. `brand.md` points to the brand
+guideline and logo files in
+[lordgen-newsletter-pipeline](https://github.com/Kikobazz123/lordgen-newsletter-pipeline).
