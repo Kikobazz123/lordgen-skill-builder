@@ -62,9 +62,9 @@ client. What's confirmed:
 | Human Approval Layer | [`human-in-the-loop.md`](human-in-the-loop.md) | Defined |
 
 **Working precedent, not yet formalized as a shared `workflows/`/`tools/` tree:**
-- `../../Lordgen ai scraper/` — Firecrawl-based lead-gen scraping (WAT framework: workflow →
+- [lordgen-scraper](https://github.com/Kikobazz123/lordgen-scraper) — Firecrawl-based lead-gen scraping (WAT framework: workflow →
   agent → deterministic tool script)
-- `../../Newsletter Demo/` — research → infographic → branded HTML → Gmail send pipeline
+- [lordgen-newsletter-pipeline](https://github.com/Kikobazz123/lordgen-newsletter-pipeline) — research → infographic → branded HTML → Gmail send pipeline
 
 Both are real and working. Neither has been merged into a shared repo yet — that
 consolidation is a deliberate later step, not an oversight.

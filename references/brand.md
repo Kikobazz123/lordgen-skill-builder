@@ -21,7 +21,7 @@ what it confirms, so you know whether it's worth opening:
   copy.
 - **Type:** Archivo, falling back to `'Helvetica Neue', Helvetica, Arial, sans-serif`. Flush
   left always — never centred or justified, including headlines.
-- **Logo files:** `../../Newsletter Demo/lordgen-ai-logo.svg` (master, web/decks/docs),
+- **Logo files** (in lordgen-newsletter-pipeline): `lordgen-ai-logo.svg` (master, web/decks/docs),
   `lordgen-mark-816.png` (raster source), `lordgen-mark-email-96.png` (email-safe raster —
   SVG is stripped by Gmail/Outlook/Yahoo, use PNG in any email context).
 - **Layout discipline:** square containers, zero border-radius, everywhere — "the single rule

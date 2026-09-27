@@ -12,7 +12,7 @@ re-deriving it from memory.
 
 This is reference knowledge, not operating rules — it describes what LordGen **is**, not
 day-to-day execution mechanics. It's sourced from `LordGen_Master_Brief_v3.md`
-(`Downloads/Lordgen Markdown files/`), the reconciled brief that supersedes the earlier draft.
+(a private document), the reconciled brief that supersedes the earlier draft.
 
 | File | Read when a skill touches... | Source |
 |---|---|---|
